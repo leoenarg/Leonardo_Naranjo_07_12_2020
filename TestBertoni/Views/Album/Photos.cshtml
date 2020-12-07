@@ -1,0 +1,75 @@
+﻿@model IEnumerable<TestBertoni.Models.Photo>
+
+@{
+    ViewData["Title"] = "Albumn - Photos";
+}
+
+<h1>Photos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.albumId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.thumbnailUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.albumId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                <img id="img" class="thumbnail-lg"  src="@item.thumbnailUrl") />
+            </td>
+            <td>
+                <a href="#" onclick="verComentarios(@item.id)">Ver comentarios</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div id="div_comments"></div>
+
+<script>
+
+    function verComentarios(id) {
+        $.ajax({
+            url: '@Url.Action("Comments")'+'?postId='+id,
+            type: 'GET',
+            cache: false,
+            statusCode: {
+                200: function (response) {
+                    $('#div_comments').html(response);
+                    $(window).scrollTop($('#div_comments').offset().top);
+                },
+                500: function (response) {
+                    console.log(response);
+                    window.location.href = "@Url.Action("Album", "Index")";
+                },
+            }
+        });
+    }
+
+</script>

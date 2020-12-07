@@ -1,0 +1,43 @@
+﻿@model IEnumerable<TestBertoni.Models.Album>
+
+@{
+    ViewData["Title"] = "Albums";
+}
+
+<h1>Index</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.userId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.userId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.ActionLink("Visualizar Album", "Photos", new { albumId = item.id})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
